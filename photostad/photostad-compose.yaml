@@ -1,4 +1,15 @@
 services:
+  photostad-service-ui:
+    container_name: photostad-service-ui
+    image: muyleangin/portistad-fontend-nextjs:latest
+    restart: always
+    ports:
+      - 3004:3000
+    environment:
+      - NODE_ENV=production
+      - GENERATE_SOURCEMAP=false
+    networks:
+      - photostad_net
   photostad-service-api:
     container_name: photostad-service-api
     image: muyleangin/photostad-svc-api:latest
@@ -30,5 +41,8 @@ services:
       - photostad_net
 networks:
   photostad_net:
-    external: true
-    name: photostad_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.86.0.0/16
