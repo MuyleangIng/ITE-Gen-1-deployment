@@ -1,4 +1,3 @@
-version: '3'
 services:
   istademy-svc-ui:
     image: muyleangin/istademy-ui:latest
