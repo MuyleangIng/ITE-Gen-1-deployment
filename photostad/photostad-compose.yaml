@@ -1,7 +1,7 @@
 services:
   photostad-service-ui:
     container_name: photostad-service-ui
-    image: muyleangin/portistad-fontend-nextjs:latest
+    image: muyleangin/photostad-deployment-front-end:latest
     restart: always
     ports:
       - 3004:3000
