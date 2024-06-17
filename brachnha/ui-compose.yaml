@@ -8,3 +8,9 @@ services:
     environment:
       - NODE_ENV=production
       - GENERATE_SOURCEMAP=false
+    networks:
+      - brachnha-network
+networks:
+  brachnha-network:
+    external: true
+    name: brachnha-network
