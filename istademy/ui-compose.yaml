@@ -8,3 +8,12 @@ services:
     environment:
       - NODE_ENV=production
       - GENERATE_SOURCEMAP=false
+    networks:
+      - istademy-network
+networks:
+  istademy-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.85.0.0/16
