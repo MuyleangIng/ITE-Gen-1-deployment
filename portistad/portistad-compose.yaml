@@ -1,0 +1,32 @@
+services:
+  portistad-service-api:
+    container_name: portistad-service-api
+    image: muyleangin/portistad-svc-api:latest
+    restart: always
+    environment:
+      TZ: Asia/Bangkok
+    ports:
+      - '8004:8080'
+    volumes:
+      - '/home/portistad/portistad-v1/file-upload:/workspace/file-upload'
+    networks:
+      - portistad-network  
+
+  portistad-service:
+    container_name: portistad-container
+    image: postgres:15.3
+    restart: always
+    ports:
+      - '5437:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: portistad_db
+      POSTGRES_PASSWORD: admin1234
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - portistad-network  
+networks:
+  portistad-network:
+    external: true  
+    name: portistad-network

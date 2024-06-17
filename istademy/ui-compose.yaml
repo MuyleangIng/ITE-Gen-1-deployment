@@ -1,0 +1,10 @@
+version: '3'
+services:
+  istademy-svc-ui:
+    image: muyleangin/istademy-ui:latest
+    restart: always
+    ports:
+      - 3006:3000
+    environment:
+      - NODE_ENV=production
+      - GENERATE_SOURCEMAP=false

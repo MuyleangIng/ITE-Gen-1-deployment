@@ -1,0 +1,10 @@
+services:
+  camgiving-svc-ui:
+    container_name: camgiving-svc-ui
+    image: muyleangin/camgiving-nextjs:latest
+    restart: always
+    ports:
+      - 3002:3000
+    environment:
+      - NODE_ENV=production
+      - GENERATE_SOURCEMAP=false

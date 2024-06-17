@@ -1,0 +1,34 @@
+services:
+  cam-giving-service-api:
+    container_name: cam-giving-service-api
+    image: cam-giving-service-api:latest
+    build:
+      context: .
+    environment:
+      TZ: Asia/Bangkok
+    ports:
+      - '8001:8080'
+    volumes:
+      - '/home/camgiving/cam-giving-deployment/file-upload:/workspace/file-upload'
+    networks:
+      - camgiving_net  
+
+  cam-giving-service-db:
+    container_name: cam-giving-service-db
+    image: postgres:14.7
+    restart: always
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: cam_giving
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - camgiving_net  
+
+networks:
+  camgiving_net:
+    external: true
+    name: camgiving_net

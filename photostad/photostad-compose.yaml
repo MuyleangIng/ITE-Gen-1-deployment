@@ -1,0 +1,34 @@
+services:
+  photostad-service-api:
+    container_name: photostad-service-api
+    image: muyleangin/photostad-svc-api:latest
+    environment:
+      TZ: Asia/Bangkok
+    ports:
+      - '8002:8080'
+    volumes:
+      - '/home/photostad/photostad-deployment-api/image:/workspace/image/'
+      - '/home/photostad/photostad-deployment-api/excel:/workspace/excel/'
+      - '/home/photostad/photostad-deployment-api/access-refresh-token-keys:/workspace/access-refresh-token-keys/'
+      - '/home/photostad/photostad-deployment-api/image/font:/workspace/image/font/'
+    networks:
+      - photostad_net
+
+  photostad-service-db:
+    container_name: photostad-service-db
+    image: postgres:14.8
+    restart: always
+    ports:
+      - '5435:5432'
+    environment:
+      POSTGRES_USER: photostad
+      POSTGRES_PASSWORD: photostad4444
+      POSTGRES_DB: photostad
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - photostad_net
+networks:
+  photostad_net:
+    external: true
+    name: photostad_net

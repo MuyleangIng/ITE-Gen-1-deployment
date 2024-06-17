@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  surveybox_stage:
+    container_name: surveybox_stage
+    image: muyleangin/surveybox-api:latest
+    restart: always
+    environment:
+      TZ: Asia/Bangkok
+    ports:
+      - '8000:8080'
+    volumes:
+      - '/home/surveybox/deployment/file-upload:/workspace/file-upload'
+    networks:
+      - surveybox-net
+
+  surveybox-db-prod:
+    container_name: surveybox-db-prod
+    image: postgres:14
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: surveybox
+      POSTGRES_PASSWORD: Root@123
+      POSTGRES_DB: surveybox_db
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - surveybox-net
+
+  surveybox-ui:
+    container_name: surveybox-ui
+    image: muyleangin/surveybox-ui:latest
+    restart: always
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=production
+      - GENERATE_SOURCEMAP=false
+    networks:
+      - surveybox-net
+
+networks:
+  surveybox-net:
+    external: true
+    name: surveybox-net
