@@ -1,9 +1,19 @@
 services:
+  camgiving-svc-ui:
+    container_name: camgiving-svc-ui
+    image: muyleangin/camgiving-nextjs:latest
+    restart: always
+    ports:
+      - 3002:3000
+    environment:
+      - NODE_ENV=production
+      - GENERATE_SOURCEMAP=false
+    networks:
+      - camgiving_net  
+
   cam-giving-service-api:
     container_name: cam-giving-service-api
-    image: cam-giving-service-api:latest
-    build:
-      context: .
+    image: muyleangin/camgiving-api:latest
     environment:
       TZ: Asia/Bangkok
     ports:
@@ -30,5 +40,8 @@ services:
 
 networks:
   camgiving_net:
-    external: true
-    name: camgiving_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.84.0.0/16
