@@ -1,4 +1,12 @@
 services:
+  portistad-frontend:
+    image: muyleangin/photostad-deployment-front-end:latest
+    restart: always
+    ports:
+      - 3008:3000
+    environment:
+      - NODE_ENV=production
+      - GENERATE_SOURCEMAP=false
   portistad-service-api:
     container_name: portistad-service-api
     image: muyleangin/portistad-svc-api:latest
@@ -28,5 +36,8 @@ services:
       - portistad-network  
 networks:
   portistad-network:
-    external: true  
-    name: portistad-network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.87.0.0/16
